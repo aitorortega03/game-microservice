@@ -24,4 +24,4 @@ logging:
 app:
   kafka:
     topics:
-      game-topic: game-topic
+      games-topic: games-topic
