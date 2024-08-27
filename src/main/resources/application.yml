@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: game-microservice
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/games
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: games-group
+      auto-offset-reset: earliest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 3
+      properties:
+        max.block.ms: 5000
+server:
+  port: 8080
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.apache.kafka: WARN
+app:
+  kafka:
+    topics:
+      game-topic: game-topic
