@@ -20,8 +20,29 @@ public class GameController {
                 .map(ResponseEntity::ok);
     }
 
+    @GetMapping("/{id}")
+    public Mono<ResponseEntity<Game>> getGame(@PathVariable String id) {
+        return gameService.getGameById(id)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
     @GetMapping
     public Flux<Game> getAllGames() {
         return gameService.getAllGames();
+    }
+
+    @PutMapping("/{id}")
+    public Mono<ResponseEntity<Game>> updateGame(@PathVariable String id, @RequestBody Game game) {
+        return gameService.updateGame(id, game)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<ResponseEntity<Void>> deleteGame(@PathVariable String id) {
+        return gameService.deleteGame(id)
+                .then(Mono.just(ResponseEntity.noContent().<Void>build()))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 }
